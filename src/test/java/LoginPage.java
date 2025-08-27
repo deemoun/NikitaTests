@@ -40,7 +40,7 @@ public class LoginPage {
     public String checkTitle(){
         return driver.getTitle();
     }
-    // Зачем это здесь?
+
     public void quit(){
         driver.quit();
     }

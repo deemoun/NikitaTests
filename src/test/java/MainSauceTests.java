@@ -1,7 +1,5 @@
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.apache.commons.logging.Log;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.params.ParameterizedTest;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
@@ -15,7 +13,7 @@ public class MainSauceTests {
 
     @BeforeEach
     public void setUp() {
-        driver = new ChromeDriver();
+        driver = new FirefoxDriver();
         loginPage = new LoginPage(driver);
         inventoryPage = new InventoryPage(driver);
         WebDriverManager.firefoxdriver().setup();
