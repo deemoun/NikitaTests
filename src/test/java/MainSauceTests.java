@@ -15,7 +15,7 @@ public class MainSauceTests {
 
     @BeforeEach
     public void setUp() {
-        driver = new FirefoxDriver();
+        driver = new ChromeDriver();
         loginPage = new LoginPage(driver);
         inventoryPage = new InventoryPage(driver);
         WebDriverManager.firefoxdriver().setup();
