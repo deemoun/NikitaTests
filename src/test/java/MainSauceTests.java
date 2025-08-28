@@ -1,5 +1,6 @@
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.By;
 
 public class MainSauceTests {
 
@@ -7,12 +8,14 @@ public class MainSauceTests {
     private WebDriver driver;
     private LoginPage loginPage;
     private InventoryPage inventoryPage;
+    private CartPage cartPage;
 
     @BeforeEach
     public void setUp() {
         driver = DriverFactory.createFirefox();
         loginPage = new LoginPage(driver);
         inventoryPage = new InventoryPage(driver);
+        cartPage = new CartPage(driver);
     }
 
     public void doLogin(){
@@ -66,8 +69,45 @@ public class MainSauceTests {
         inventoryPage.goToCart();
     }
 
+    private void addThreeItems() {
+        inventoryPage.addItemToCart("sauce-labs-backpack");
+        inventoryPage.addItemToCart("sauce-labs-bike-light");
+        inventoryPage.addItemToCart("sauce-labs-bolt-t-shirt");
+    }
+
     @Test
     @Order(6)
+    public void removeItemsFromCartTest() {
+        doLogin();
+        addThreeItems();
+        inventoryPage.goToCart();
+        cartPage.removeItem("sauce-labs-backpack");
+        cartPage.removeItem("sauce-labs-bike-light");
+        cartPage.removeItem("sauce-labs-bolt-t-shirt");
+        Assertions.assertEquals(0, driver.findElements(By.className("cart_item")).size());
+    }
+
+    @Test
+    @Order(7)
+    public void checkoutAfterAddingThreeItems() {
+        doLogin();
+        addThreeItems();
+        inventoryPage.goToCart();
+        cartPage.proceedToCheckout();
+        Assertions.assertTrue(driver.getCurrentUrl().contains("checkout-step-one.html"));
+    }
+
+    @Test
+    @Order(8)
+    public void returnToInventoryFromCart() {
+        doLogin();
+        inventoryPage.goToCart();
+        cartPage.continueShopping();
+        Assertions.assertTrue(cartPage.isInventoryPage());
+    }
+
+    @Test
+    @Order(9)
     @DisplayName("Logout Test")
     public void logoutTest() {
         doLogin();

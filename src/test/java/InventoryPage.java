@@ -8,6 +8,14 @@ public class InventoryPage extends BasePage {
     private final By bikeLightButton = By.id("add-to-cart-sauce-labs-bike-light");
     private final By removeBikeLightButton = By.id("remove-sauce-labs-bike-light");
     private final By removeBackpackButton = By.id("remove-sauce-labs-backpack");
+    
+    public void addItemToCart(String itemId) {
+        driver.findElement(By.id("add-to-cart-" + itemId)).click();
+    }
+    
+    public void removeItemFromCart(String itemId) {
+        driver.findElement(By.id("remove-" + itemId)).click();
+    }
 
     InventoryPage(WebDriver driver) {
         super(driver);
