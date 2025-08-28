@@ -7,6 +7,7 @@ public class InventoryPage extends BasePage {
     private final By backpackButton = By.id("add-to-cart-sauce-labs-backpack");
     private final By bikeLightButton = By.id("add-to-cart-sauce-labs-bike-light");
     private final By removeBikeLightButton = By.id("remove-sauce-labs-bike-light");
+    private final By removeBackpackButton = By.id("remove-sauce-labs-backpack");
 
     InventoryPage(WebDriver driver) {
         super(driver);
@@ -30,7 +31,7 @@ public class InventoryPage extends BasePage {
     }
 
     public void removeBackpackFromCart() {
-        driver.findElement(By.id("remove-sauce-labs-backpack")).click();
+        driver.findElement(removeBackpackButton).click();
     }
 
     public void goToCart() {
@@ -38,19 +39,19 @@ public class InventoryPage extends BasePage {
         navigateToPage("https://www.saucedemo.com/cart.html");
     }
     public boolean isBackpackInCart() {
-        return driver.findElement(By.id("remove-sauce-labs-backpack")).isDisplayed();
+        return driver.findElement(removeBackpackButton).isDisplayed();
     }
 
     public boolean isBikeLightInCart() {
-        return driver.findElement(By.id("remove-sauce-labs-bike-light")).isDisplayed();
+        return driver.findElement(removeBikeLightButton).isDisplayed();
     }
 
     public boolean isBackpackRemoved() {
-        return driver.findElement(By.id("add-to-cart-sauce-labs-backpack")).isDisplayed();
+        return driver.findElement(backpackButton).isDisplayed();
     }
 
     public boolean isBikeLightRemoved() {
-        return driver.findElement(By.id("add-to-cart-sauce-labs-bike-light")).isDisplayed();
+        return driver.findElement(bikeLightButton).isDisplayed();
     }
     public boolean isCartPage() {
         return driver.getCurrentUrl().contains("cart.html");
