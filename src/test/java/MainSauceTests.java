@@ -1,16 +1,18 @@
 import org.junit.jupiter.api.*;
+import org.openqa.selenium.WebDriver;
 
-public class MainSauceTests extends BasePage{
+public class MainSauceTests {
 
     private static final String BASE_URL = "https://www.saucedemo.com/";
-    private static LoginPage loginPage;
-    private static InventoryPage inventoryPage;
-
+    private WebDriver driver;
+    private LoginPage loginPage;
+    private InventoryPage inventoryPage;
 
     @BeforeEach
     public void setUp() {
-        loginPage = new LoginPage();
-        inventoryPage = new InventoryPage();
+        driver = DriverFactory.createFirefox();
+        loginPage = new LoginPage(driver);
+        inventoryPage = new InventoryPage(driver);
     }
 
     public void doLogin(){
@@ -33,7 +35,6 @@ public class MainSauceTests extends BasePage{
     public void loginTest() {
         doLogin("problem_user", "secret_sauce");
         inventoryPage.addBackpackToCart();
-        LoginPage loginPage = new LoginPage();
         Assertions.assertEquals("Swag Labs", loginPage.checkTitle(), "Title doesn't match");
     }
     @Test
@@ -76,6 +77,6 @@ public class MainSauceTests extends BasePage{
 
     @AfterEach
     public void tearDown() {
-        DriverFactory.closeFirefox(super.driver);
+        DriverFactory.closeFirefox(driver);
     }
 }
