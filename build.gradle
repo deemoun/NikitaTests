@@ -16,6 +16,8 @@ dependencies {
     implementation 'io.github.bonigarcia:webdrivermanager:6.2.0'
     // https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java
     implementation 'org.seleniumhq.selenium:selenium-java:4.35.0'
+    // https://mvnrepository.com/artifact/com.github.javafaker/javafaker
+    implementation("com.github.javafaker:javafaker:1.0.2")
 }
 
 test {
