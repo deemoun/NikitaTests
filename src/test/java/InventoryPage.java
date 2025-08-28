@@ -1,4 +1,5 @@
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 
 public class InventoryPage extends BasePage {
     private final By menuButton = By.id("react-burger-menu-btn");
@@ -7,9 +8,8 @@ public class InventoryPage extends BasePage {
     private final By bikeLightButton = By.id("add-to-cart-sauce-labs-bike-light");
     private final By removeBikeLightButton = By.id("remove-sauce-labs-bike-light");
 
-
-    InventoryPage() {
-        super();
+    InventoryPage(WebDriver driver) {
+        super(driver);
     }
 
     public void pressMenuButton() {
