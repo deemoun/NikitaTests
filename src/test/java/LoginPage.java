@@ -2,20 +2,11 @@ import org.jspecify.annotations.Nullable;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-public class LoginPage {
+public class LoginPage extends BasePage {
 
-    private final WebDriver driver;
     private By userNameField = By.id("user-name");
     private By userPasswordField = By.id("password");
     private By loginButton = By.id("login-button");
-
-    LoginPage(WebDriver driver){
-        this.driver=driver;
-    }
-
-    public void navigateToPage(String url){
-        driver.get(url);
-    }
 
     public void enterUsername(){
         driver.findElement(userNameField).sendKeys("standard_user");
@@ -41,7 +32,4 @@ public class LoginPage {
         return driver.getTitle();
     }
 
-    public void quit(){
-        driver.quit();
-    }
 }
