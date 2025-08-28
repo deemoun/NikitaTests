@@ -4,17 +4,21 @@ import org.openqa.selenium.WebDriver;
 public class InventoryPage extends BasePage {
     private final By menuButton = By.id("react-burger-menu-btn");
     private final By logoutButton = By.id("logout_sidebar_link");
-    private final By backpackButton = By.id("add-to-cart-sauce-labs-backpack");
-    private final By bikeLightButton = By.id("add-to-cart-sauce-labs-bike-light");
-    private final By removeBikeLightButton = By.id("remove-sauce-labs-bike-light");
-    private final By removeBackpackButton = By.id("remove-sauce-labs-backpack");
     
     public void addItemToCart(String itemId) {
         driver.findElement(By.id("add-to-cart-" + itemId)).click();
     }
-    
+
     public void removeItemFromCart(String itemId) {
         driver.findElement(By.id("remove-" + itemId)).click();
+    }
+
+    public boolean isItemInCart(String itemId) {
+        return driver.findElement(By.id("remove-" + itemId)).isDisplayed();
+    }
+
+    public boolean isItemRemoved(String itemId) {
+        return driver.findElement(By.id("add-to-cart-" + itemId)).isDisplayed();
     }
 
     InventoryPage(WebDriver driver) {
@@ -28,39 +32,12 @@ public class InventoryPage extends BasePage {
     public void pressLogoutButton() {
         driver.findElement(logoutButton).click();
     }
-    public void addBackpackToCart() {
-        driver.findElement(backpackButton).click();
-    }
-    public void addBikeLightToCart() {
-        driver.findElement(bikeLightButton).click();
-    }
-    public void removeBikeLightFromCart() {
-        driver.findElement(removeBikeLightButton).click();
-    }
-
-    public void removeBackpackFromCart() {
-        driver.findElement(removeBackpackButton).click();
-    }
 
     public void goToCart() {
         //driver.findElement(By.className("shopping_cart_link")).click();
         navigateToPage("https://www.saucedemo.com/cart.html");
     }
-    public boolean isBackpackInCart() {
-        return driver.findElement(removeBackpackButton).isDisplayed();
-    }
 
-    public boolean isBikeLightInCart() {
-        return driver.findElement(removeBikeLightButton).isDisplayed();
-    }
-
-    public boolean isBackpackRemoved() {
-        return driver.findElement(backpackButton).isDisplayed();
-    }
-
-    public boolean isBikeLightRemoved() {
-        return driver.findElement(bikeLightButton).isDisplayed();
-    }
     public boolean isCartPage() {
         return driver.getCurrentUrl().contains("cart.html");
     }
