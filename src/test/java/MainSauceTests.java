@@ -1,7 +1,10 @@
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.By;
 
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class MainSauceTests {
 
     private static final String BASE_URL = "https://www.saucedemo.com/";
@@ -37,33 +40,31 @@ public class MainSauceTests {
     @DisplayName("Login Test")
     public void loginTest() {
         doLogin("problem_user", "secret_sauce");
-        inventoryPage.addBackpackToCart();
+        inventoryPage.addItemToCart("sauce-labs-backpack");
         Assertions.assertEquals("Swag Labs", loginPage.checkTitle(), "Title doesn't match");
     }
-    @Test
+
+    @ParameterizedTest
+    @ValueSource(strings = {"sauce-labs-backpack", "sauce-labs-bike-light"})
     @Order(2)
-    public void removeBackpackFromCartTest () {
+    public void addItemToCartTest(String itemId) {
         doLogin();
-        inventoryPage.addBackpackToCart();
-        inventoryPage.removeBackpackFromCart();
+        inventoryPage.addItemToCart(itemId);
+        Assertions.assertTrue(inventoryPage.isItemInCart(itemId));
     }
 
-    @Test
+    @ParameterizedTest
+    @ValueSource(strings = {"sauce-labs-backpack", "sauce-labs-bike-light"})
     @Order(3)
-    public void addBikeLightTest() {
+    public void removeItemFromCartTest(String itemId) {
         doLogin();
-        inventoryPage.addBikeLightToCart();
+        inventoryPage.addItemToCart(itemId);
+        inventoryPage.removeItemFromCart(itemId);
+        Assertions.assertTrue(inventoryPage.isItemRemoved(itemId));
     }
+
     @Test
     @Order(4)
-    public void removeBikeLightTest() {
-        doLogin();
-        inventoryPage.addBikeLightToCart();
-        inventoryPage.removeBikeLightFromCart();
-    }
-
-    @Test
-    @Order(5)
     public void navigateToCart(){
         doLogin();
         inventoryPage.goToCart();
@@ -76,7 +77,7 @@ public class MainSauceTests {
     }
 
     @Test
-    @Order(6)
+    @Order(5)
     public void removeItemsFromCartTest() {
         doLogin();
         addThreeItems();
@@ -88,7 +89,7 @@ public class MainSauceTests {
     }
 
     @Test
-    @Order(7)
+    @Order(6)
     public void checkoutAfterAddingThreeItems() {
         doLogin();
         addThreeItems();
@@ -98,7 +99,7 @@ public class MainSauceTests {
     }
 
     @Test
-    @Order(8)
+    @Order(7)
     public void returnToInventoryFromCart() {
         doLogin();
         inventoryPage.goToCart();
@@ -107,7 +108,7 @@ public class MainSauceTests {
     }
 
     @Test
-    @Order(9)
+    @Order(8)
     @DisplayName("Logout Test")
     public void logoutTest() {
         doLogin();
