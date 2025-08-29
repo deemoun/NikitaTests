@@ -48,7 +48,38 @@ class BasePage {
         }
     }
 
-//    protected boolean doesTitleMatch(String title, By locator){
-//        return Assertions.assertEquals(title, );
-//    }
+    /**
+     * Assert that the current page title matches the expected title.
+     *
+     * @param expectedTitle expected title of the current page
+     */
+    protected void assertTitleEquals(String expectedTitle) {
+        String actualTitle = driver.getTitle();
+        Assertions.assertEquals(expectedTitle, actualTitle,
+                "Expected page title to be \"" + expectedTitle + "\" but was \"" + actualTitle + "\"");
+    }
+
+    /**
+     * Assert that the given locator resolves to the expected number of elements.
+     *
+     * @param locator       locator to search for
+     * @param expectedCount expected number of matching elements
+     */
+    protected void assertElementCount(By locator, int expectedCount) {
+        int actualCount = driver.findElements(locator).size();
+        Assertions.assertEquals(expectedCount, actualCount,
+                "Expected " + expectedCount + " elements for locator " + locator + " but found " + actualCount);
+    }
+
+    /**
+     * Assert that the text of the element identified by the locator matches the expected text.
+     *
+     * @param locator      locator of the element to check
+     * @param expectedText expected text value
+     */
+    protected void assertTextEquals(By locator, String expectedText) {
+        String actualText = getText(locator);
+        Assertions.assertEquals(expectedText, actualText,
+                "Expected text \"" + expectedText + "\" for locator " + locator + " but was \"" + actualText + "\"");
+    }
 }
