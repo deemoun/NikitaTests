@@ -3,9 +3,9 @@ import org.openqa.selenium.WebDriver;
 
 public class LoginPage extends BasePage {
 
-    private By userNameField = By.id("user-name");
-    private By userPasswordField = By.id("password");
-    private By loginButton = By.id("login-button");
+    private final By userNameField = By.id("user-name");
+    private final By userPasswordField = By.id("password");
+    private final By loginButton = By.id("login-button");
 
     public LoginPage(WebDriver driver) {
         super(driver);
@@ -28,7 +28,7 @@ public class LoginPage extends BasePage {
     }
 
     public void pressLoginButton(){
-        driver.findElement(loginButton).click();
+        click(loginButton);
     }
 
     public String checkTitle(){

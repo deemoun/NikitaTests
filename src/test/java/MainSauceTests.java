@@ -7,7 +7,6 @@ import org.openqa.selenium.By;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class MainSauceTests {
 
-    private static final String BASE_URL = "https://www.saucedemo.com/";
     private WebDriver driver;
     private LoginPage loginPage;
     private InventoryPage inventoryPage;
@@ -22,14 +21,14 @@ public class MainSauceTests {
     }
 
     public void doLogin(){
-        loginPage.navigateToPage(BASE_URL);
+        loginPage.navigateToBaseUrl();
         loginPage.enterUsername();
         loginPage.enterPassword();
         loginPage.pressLoginButton();
     }
 
     public void doLogin(String user, String password){
-        loginPage.navigateToPage(BASE_URL);
+        loginPage.navigateToBaseUrl();
         loginPage.enterUsername(user);
         loginPage.enterPassword(password);
         loginPage.pressLoginButton();
@@ -41,12 +40,13 @@ public class MainSauceTests {
     public void loginTest() {
         doLogin();
         inventoryPage.addItemToCart("sauce-labs-backpack");
-        Assertions.assertEquals("Swag Labs", loginPage.checkTitle(), "Title doesn't match");
+        //Assertions.assertEquals("Swag Labs", loginPage.checkTitle(), "Title doesn't match");
+        inventoryPage.assertTitle("Swag Labs");
     }
 
     @Test
     @Order(2)
-    @DisplayName("Login Test: Assert Problem")
+    @DisplayName("Login Test: Problem user")
     public void loginTestProblemUser() {
         doLogin("problem_user", "secret_sauce");
         inventoryPage.addItemToCart("sauce-labs-backpack");
@@ -86,6 +86,8 @@ public class MainSauceTests {
                 "sauce-labs-bike-light",
                 "sauce-labs-bolt-t-shirt"
         };
+
+        String[] ids2 = { "test", "test2", "test3" };
 
         for (String id : ids) {
             inventoryPage.addItemToCart(id);

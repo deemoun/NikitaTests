@@ -9,6 +9,7 @@ import java.time.Duration;
 class BasePage {
     protected WebDriver driver;
     protected WebDriverWait wait;
+    private static final String BASE_URL = "https://www.saucedemo.com/";
 
     protected BasePage(WebDriver driver) {
         this.driver = driver;
@@ -18,6 +19,10 @@ class BasePage {
 
     public void navigateToPage(String url) {
         driver.get(url);
+    }
+
+    public void navigateToBaseUrl(){
+        driver.get(BASE_URL);
     }
 
     public String getTitle() {
@@ -48,7 +53,12 @@ class BasePage {
         }
     }
 
-//    protected boolean doesTitleMatch(String title, By locator){
-//        return Assertions.assertEquals(title, );
-//    }
+    protected void assertTitle(String expectedTitle) {
+        Assertions.assertEquals(expectedTitle, driver.getTitle(), "Несовпадение title");
+    }
+
+    protected void assertElementCount(By locator, int expectedCount) {
+        int actualCount = driver.findElements(locator).size();
+        Assertions.assertEquals(expectedCount, actualCount, "Неверное количество элементов");
+    }
 }
