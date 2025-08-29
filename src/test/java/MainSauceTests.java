@@ -37,16 +37,26 @@ public class MainSauceTests {
 
     @Test
     @Order(1)
-    @DisplayName("Login Test")
+    @DisplayName("Login Test: Assert Standard User")
     public void loginTest() {
+        doLogin();
+        inventoryPage.addItemToCart("sauce-labs-backpack");
+        Assertions.assertEquals("Swag Labs", loginPage.checkTitle(), "Title doesn't match");
+    }
+
+    @Test
+    @Order(2)
+    @DisplayName("Login Test: Assert Problem")
+    public void loginTestProblemUser() {
         doLogin("problem_user", "secret_sauce");
         inventoryPage.addItemToCart("sauce-labs-backpack");
         Assertions.assertEquals("Swag Labs", loginPage.checkTitle(), "Title doesn't match");
     }
 
+
     @ParameterizedTest
     @ValueSource(strings = {"sauce-labs-backpack", "sauce-labs-bike-light"})
-    @Order(2)
+    @Order(3)
     public void addItemToCartTest(String itemId) {
         doLogin();
         inventoryPage.addItemToCart(itemId);
@@ -55,7 +65,7 @@ public class MainSauceTests {
 
     @ParameterizedTest
     @ValueSource(strings = {"sauce-labs-backpack", "sauce-labs-bike-light"})
-    @Order(3)
+    @Order(4)
     public void removeItemFromCartTest(String itemId) {
         doLogin();
         inventoryPage.addItemToCart(itemId);
@@ -64,20 +74,26 @@ public class MainSauceTests {
     }
 
     @Test
-    @Order(4)
+    @Order(5)
     public void navigateToCart(){
         doLogin();
         inventoryPage.goToCart();
     }
 
-    private void addThreeItems() {
-        inventoryPage.addItemToCart("sauce-labs-backpack");
-        inventoryPage.addItemToCart("sauce-labs-bike-light");
-        inventoryPage.addItemToCart("sauce-labs-bolt-t-shirt");
+    public void addThreeItems() {
+        String[] ids = {
+                "sauce-labs-backpack",
+                "sauce-labs-bike-light",
+                "sauce-labs-bolt-t-shirt"
+        };
+
+        for (String id : ids) {
+            inventoryPage.addItemToCart(id);
+        }
     }
 
     @Test
-    @Order(5)
+    @Order(6)
     public void removeItemsFromCartTest() {
         doLogin();
         addThreeItems();
@@ -89,7 +105,7 @@ public class MainSauceTests {
     }
 
     @Test
-    @Order(6)
+    @Order(7)
     public void checkoutAfterAddingThreeItems() {
         doLogin();
         addThreeItems();
@@ -99,7 +115,7 @@ public class MainSauceTests {
     }
 
     @Test
-    @Order(7)
+    @Order(8)
     public void returnToInventoryFromCart() {
         doLogin();
         inventoryPage.goToCart();
@@ -108,7 +124,7 @@ public class MainSauceTests {
     }
 
     @Test
-    @Order(8)
+    @Order(9)
     @DisplayName("Logout Test")
     public void logoutTest() {
         doLogin();

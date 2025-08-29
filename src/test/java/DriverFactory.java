@@ -10,6 +10,7 @@ public final class DriverFactory {
     public static WebDriver createFirefox() {
         WebDriverManager.firefoxdriver().setup();
         FirefoxOptions opts = new FirefoxOptions();
+        opts.addArguments("-width=1920", "-height=1080");
         return new FirefoxDriver(opts);
     }
 
@@ -18,7 +19,6 @@ public final class DriverFactory {
             try {
                 driver.quit(); // корректно убивает всю сессию
             } catch (WebDriverException e) {
-                // На случай «Already closed» и прочих артефактов
                 try {
                     driver.close(); // попытка закрыть текущее окно (если ещё живо)
                 } catch (Exception ignored) {}

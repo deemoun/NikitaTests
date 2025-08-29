@@ -1,3 +1,4 @@
+import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -47,7 +48,7 @@ class BasePage {
         }
     }
 
-    public WebDriver returnDriver(){
-        return this.driver;
-    }
+//    protected boolean doesTitleMatch(String title, By locator){
+//        return Assertions.assertEquals(title, );
+//    }
 }
